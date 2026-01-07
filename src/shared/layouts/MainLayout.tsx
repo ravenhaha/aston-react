@@ -1,17 +1,15 @@
-import type { ReactNode } from 'react'
-import { LayoutHeader } from '../../widgets/LayoutHeader/LayoutHeader'
-import { LayoutFooter } from '../../widgets/LayoutFooter/LayoutFooter'
+import { Outlet } from 'react-router-dom';
+import { LayoutHeader } from '../../widgets/LayoutHeader/LayoutHeader';
+import { LayoutFooter } from '../../widgets/LayoutFooter/LayoutFooter';
 
-type Props = {
-    children: ReactNode
-}
-
-export const MainLayout = ({ children }: Props) => {
+export const MainLayout = () => {
     return (
-        <>
+        <div>
             <LayoutHeader />
-            <main>{children}</main>
+            <main>
+                <Outlet />
+            </main>
             <LayoutFooter />
-        </>
-    )
-}
+        </div>
+    );
+};
