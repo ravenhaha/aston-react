@@ -1,16 +1,16 @@
-import { usePosts } from '../../features/PostList/model/hooks/usePosts';
+import { useGetPostsQuery } from '../../entities/post/api/postsApi';
 import { PostCard } from '../../entities/post/ui/PostCard';
 
 export const PostsPage = () => {
-    const { posts, loading, error } = usePosts();
+    const { data: posts, isLoading, error } = useGetPostsQuery();
 
-    if (loading) return <div>Загрузка...</div>;
-    if (error) return <div>Ошибка: {error}</div>;
+    if (isLoading) return <div>Загрузка...</div>;
+    if (error) return <div>Ошибка загрузки постов</div>;
 
     return (
         <div>
             <h1>Все посты</h1>
-            {posts.map(post => (
+            {posts?.map(post => (
                 <PostCard
                     key={post.id}
                     title={post.title}

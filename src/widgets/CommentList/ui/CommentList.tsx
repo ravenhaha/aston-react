@@ -1,25 +1,41 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, type MouseEventHandler } from 'react';
+import type { Comment } from '@/entities/comment/model/types';
 
-const CommentList = () => {
-    const [isCollapsed, setIsCollapsed] = useState(true);
+interface CommentListProps {
+    comments: Comment[];
+    initialCollapsed?: boolean;
+}
 
-    const toggleCollapse = useCallback(() => {
+const CommentList = ({ comments, initialCollapsed = true }: CommentListProps) => {
+    const [isCollapsed, setIsCollapsed] = useState(initialCollapsed);
+
+    const toggleCollapse: MouseEventHandler<HTMLButtonElement> = useCallback(() => {
         setIsCollapsed((prev) => !prev);
     }, []);
+
+    if (comments.length === 0) {
+        return <div>No comments</div>;
+    }
 
     return (
         <div>
             <button onClick={toggleCollapse}>
                 {isCollapsed ? 'Show Comments' : 'Hide Comments'}
+                {` (${comments.length})`}
             </button>
 
             <div style={{ display: isCollapsed ? 'none' : 'block' }}>
-                <div>Comment 1</div>
-                <div>Comment 2</div>
-                <div>Comment 3</div>
+                {comments.map((comment) => (
+                    <div key={comment.id} style={{ marginTop: 8, padding: 8, border: '1px solid #eee' }}>
+                        <strong>{comment.name}</strong>
+                        <p>{comment.body}</p>
+                        <small>{comment.email}</small>
+                    </div>
+                ))}
             </div>
         </div>
     );
 };
 
 export default CommentList;
+export type { CommentListProps };
