@@ -1,17 +1,12 @@
-import { useState } from 'react';
-import { ThemeContext } from './ThemeContext';
-import type { Theme } from './ThemeContext';
+import { useState, useCallback, type PropsWithChildren } from 'react';
+import { ThemeContext, type Theme } from './ThemeContext';
 
-interface ThemeProviderProps {
-    children: React.ReactNode;
-}
-
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+export const ThemeProvider = ({ children }: PropsWithChildren) => {
     const [theme, setTheme] = useState<Theme>('light');
 
-    const toggleTheme = () => {
-        setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
-    };
+    const toggleTheme = useCallback(() => {
+        setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    }, []);
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>

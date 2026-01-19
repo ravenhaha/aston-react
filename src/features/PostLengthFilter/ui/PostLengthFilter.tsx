@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
+import { useState, type ChangeEventHandler } from 'react';
+import type { Post } from '@/entities/post/model/types';
 import { filterByLength } from '../lib/filterByLength';
 
-const PostLengthFilter = ({ posts }: { posts: { title: string, body: string }[] }) => {
-    const [length, setLength] = useState(0);
+interface PostLengthFilterProps {
+    posts: Post[];
+}
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLength(Number(event.target.value));
+const PostLengthFilter = ({ posts }: PostLengthFilterProps) => {
+    const [minLength, setMinLength] = useState(0);
+
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+        setMinLength(Number(event.target.value));
     };
 
-    const filteredPosts = filterByLength(posts, length);
+    const filteredPosts = filterByLength(posts, minLength);
 
     return (
         <div>
             <input
                 type="number"
-                value={length}
+                value={minLength}
                 onChange={handleChange}
                 placeholder="Filter by length"
+                min={0}
             />
             <div>
                 {filteredPosts.map((post) => (
-                    <div key={post.title}>{post.title}</div>
+                    <div key={post.id}>{post.title}</div>
                 ))}
             </div>
         </div>
@@ -28,5 +34,4 @@ const PostLengthFilter = ({ posts }: { posts: { title: string, body: string }[] 
 };
 
 export default PostLengthFilter;
-
-
+export type { PostLengthFilterProps };

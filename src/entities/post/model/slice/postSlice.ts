@@ -3,8 +3,8 @@ import type { Post } from '../types';
 import type { RootState } from '@/app/providers/store';
 import { postsApi } from '../../api/postsApi';
 
-const postsAdapter = createEntityAdapter<Post>({
-  selectId: (post) => post.id,
+const postsAdapter = createEntityAdapter<Post, number>({
+  selectId: (post: Post) => post.id,
 });
 
 export const postSlice = createSlice({

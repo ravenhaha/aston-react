@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { postsApi } from '@/entities/post/api/postsApi';
 import { commentsApi } from '@/entities/comment/api/commentsApi';
 import { albumsApi } from '@/entities/album/api/albumsApi';
+import { photosApi } from '@/entities/photo/api/photosApi';
 import { todosApi } from '@/entities/todo/api/todosApi';
 import { usersApi } from '@/entities/user/api/usersApi';
 import { postSlice } from '@/entities/post/model/slice/postSlice';
@@ -12,6 +13,7 @@ export const store = configureStore({
     [postsApi.reducerPath]: postsApi.reducer,
     [commentsApi.reducerPath]: commentsApi.reducer,
     [albumsApi.reducerPath]: albumsApi.reducer,
+    [photosApi.reducerPath]: photosApi.reducer,
     [todosApi.reducerPath]: todosApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     posts: postSlice.reducer,
@@ -22,6 +24,7 @@ export const store = configureStore({
       .concat(postsApi.middleware)
       .concat(commentsApi.middleware)
       .concat(albumsApi.middleware)
+      .concat(photosApi.middleware)
       .concat(todosApi.middleware)
       .concat(usersApi.middleware),
 });

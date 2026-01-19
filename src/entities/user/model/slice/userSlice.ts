@@ -3,8 +3,8 @@ import type { User } from '../types';
 import type { RootState } from '@/app/providers/store';
 import { usersApi } from '../../api/usersApi';
 
-const usersAdapter = createEntityAdapter<User>({
-  selectId: (user) => user.id,
+const usersAdapter = createEntityAdapter<User, number>({
+  selectId: (user: User) => user.id,
 });
 
 export const userSlice = createSlice({
